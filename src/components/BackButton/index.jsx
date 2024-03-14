@@ -3,10 +3,10 @@ import React from 'react'
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import styles from './style';
 
-const BackButton = ({navigation}) => {
+const BackButton = ({navigation, style}) => {
   return (
-    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.arrowBack}>
-        <FontAwesome name="arrow-left" color="#fff" size={20} />
+    <TouchableOpacity onPress={() => navigation.goBack()} style={[styles.arrowBack, style]}>
+        <FontAwesome name="arrow-left" color="#fff" size={style?.size || 20} />
     </TouchableOpacity>
   )
 }

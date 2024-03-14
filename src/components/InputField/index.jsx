@@ -9,16 +9,16 @@ import React, { useState } from 'react';
 import styles from './style';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const InputField = ({iconName, keyboardType, placeholder, isPassword}) => {
+const InputField = ({iconName, keyboardType, placeholder, isPassword, containerStyle, iconColor, inputStyles}) => {
     const [isInputTextShow, setisInputTextShow] = useState(isPassword)
   return (
-    <View style={styles.inputContainer}>
-      <FontAwesome style={{marginRight: 10, minWidth: 20, textAlign: "center"}} name={iconName} size={20} color="#fff" />
+    <View style={[styles.inputContainer, containerStyle]}>
+      <FontAwesome style={{marginRight: 10, minWidth: 20, textAlign: "center"}} name={iconName} size={20} color={iconColor || "#fff"} />
 
       <TextInput
         placeholder={placeholder}
-        placeholderTextColor={'#fff'}
-        style={styles.inputField}
+        placeholderTextColor={inputStyles?.placeholderTextColor || '#fff'}
+        style={[styles.inputField, inputStyles]}
         secureTextEntry={isInputTextShow}
         keyboardType={keyboardType || "default"}
       />

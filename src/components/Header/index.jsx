@@ -19,7 +19,6 @@ const Header = ({name}) => {
             </TouchableOpacity>
             <TouchableOpacity>
                 <Image source={require("../../assets/images/profile.jpg")} style={styles.userIcon} />
-                {/* <Ionicons name="notifications" color={colors.TEXT} size={25} /> */}
             </TouchableOpacity>
         </View>
     </View>

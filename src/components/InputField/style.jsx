@@ -5,6 +5,8 @@ import fontSizes from '../../configs/fontSizes';
 const styles = StyleSheet.create({
     inputContainer: {
         // flex: 1,
+        flexShrink: 1,      //NEW
+        display: "flex",
         flexDirection: "row",
         alignItems: "center",
         borderRadius: 8,

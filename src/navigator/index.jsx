@@ -6,6 +6,8 @@ import GettingStarted from '../screens/GettingStarted';
 import Login from '../screens/Login';
 import Registration from '../screens/Registration';
 import Home from '../screens/Home';
+import Search from '../screens/Search';
+import SongPlayer from '../screens/SongPlayer';
 
 const Stack = createNativeStackNavigator();
 const {Navigator, Screen} = Stack;
@@ -15,11 +17,13 @@ const StackOptions = {
 
 const AuthStack = () => {
   return (
-    <Navigator initialRouteName='GettingStarted' screenOptions={StackOptions}>
+    <Navigator initialRouteName='SongPlayer' screenOptions={StackOptions}>
       <Screen name="GettingStarted" component={GettingStarted} />
       <Screen name="Login" component={Login} />
       <Screen name="Registration" component={Registration} />
       <Screen name="Home" component={Home} />
+      <Screen name="Search" component={Search} />
+      <Screen name="SongPlayer" component={SongPlayer} />
     </Navigator>
   );
 };
