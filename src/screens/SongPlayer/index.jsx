@@ -8,7 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import colors from '../../configs/colors';
 
-const SongPlayer = () => {
+const SongPlayer = ({navigation}) => {
   const [isSongLiked, setisSongLiked] = useState(false);
   const [isSongPlay, setisSongPlay] = useState(true)
 
@@ -16,7 +16,7 @@ const SongPlayer = () => {
     <View style={[globalStyle.container, styles.container]}>
       <StatusBar barStyle={"light-content"} backgroundColor={"#25274D"} />
       <View style={styles.topContainer}>
-        <TouchableOpacity style={{marginTop: 50}}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={{marginTop: 50}}>
           <FontAwesome name="chevron-left" color={colors.TEXT} size={25} />
         </TouchableOpacity>
         <Image

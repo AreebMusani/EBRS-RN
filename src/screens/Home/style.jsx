@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     container: {
         // flexGrow: 1,
         // flex: 1
-        padding: 0
+        padding: 0,    
     },
 
     rowBetween: {

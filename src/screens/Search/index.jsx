@@ -7,7 +7,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import BackButton from '../../components/BackButton';
 import FaceScan from '../../components/FaceScan';
 
-const Search = () => {
+const Search = ({navigation}) => {
     const [isShowModal, setisShowModal] = useState(false);
     const topGenre = [
         {
@@ -89,7 +89,7 @@ const Search = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={[globalStyle.container, styles.container]}>
-        <BackButton style={{position: "relative", top: 0, left: 0, size: 20, marginVertical: 10}} />
+        <BackButton onPress={() => navigation.navigate("Home")} style={{position: "relative", top: 0, left: 0, size: 20, marginVertical: 10}} />
         <View style={styles.row}>
           <InputField
             keyboardType={'email-address'}

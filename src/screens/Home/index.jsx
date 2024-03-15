@@ -21,7 +21,7 @@ import {
 import colors from '../../configs/colors';
 import FaceScan from '../../components/FaceScan';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const [isShowModal, setisShowModal] = useState(true);
 
   // useEffect(() => {
@@ -31,7 +31,7 @@ const Home = () => {
   return (
     <View style={[globalStyles.container, styles.container]}>
       <StatusBar backgroundColor={'#322251'} />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView style={{flexGrow: 1}} showsVerticalScrollIndicator={false}>
         <Header name={'Areeb'} />
 
         <View style={{paddingHorizontal: 20}}>
@@ -48,7 +48,7 @@ const Home = () => {
             showsHorizontalScrollIndicator={false}
             ItemSeparatorComponent={() => <View style={{width: 20}}></View>}
             data={recentlyPlayed}
-            renderItem={({item, index}) => <SongItem key={index} item={item} />}
+            renderItem={({item, index}) => <SongItem navigation={navigation} key={index} item={item} />}
           />
         </View>
 
@@ -66,7 +66,7 @@ const Home = () => {
             ItemSeparatorComponent={() => <View style={{width: 20}}></View>}
             data={recommendData}
             renderItem={({item, index}) => (
-              <SongItem key={index} item={item} style={{height: 220}} />
+               <SongItem navigation={navigation} key={index} item={item} style={{height: 220}} />
             )}
           />
         </View>
@@ -85,7 +85,7 @@ const Home = () => {
             ItemSeparatorComponent={() => <View style={{width: 20}}></View>}
             data={todayHitsData}
             renderItem={({item, index}) => (
-              <SongItem key={index} item={item} style={{height: 220}} />
+               <SongItem navigation={navigation} key={index} item={item} style={{height: 220}} />
             )}
           />
         </View>
@@ -105,6 +105,7 @@ const Home = () => {
             data={topArtist}
             renderItem={({item, index}) => (
               <SongItem
+                navigation={navigation}
                 key={index}
                 item={item}
                 style={{height: 200, borderRadius: 100}}
