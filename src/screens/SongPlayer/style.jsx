@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     playlistItemHead: {
         color: colors.TEXT,
         fontWeight: "bold",
-        fontSize: fontSizes.text2,
+        fontSize: fontSizes.text3,
     },
 
     playlistItemSubHead: {
@@ -77,9 +77,14 @@ const styles = StyleSheet.create({
     },
 
     playlistItemImg: {
-        width: width * 0.15,
-        height: width * 0.15,
+        width: width * 0.12,
+        height: width * 0.12,
         borderRadius: 10
+    },
+
+    bottomContentContainer: {
+        // backgroundColor: "#0000002E"
+        flex: 1
     }
 })
 

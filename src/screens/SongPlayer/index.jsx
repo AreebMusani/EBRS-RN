@@ -1,5 +1,12 @@
-import {Image, StatusBar, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import {
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useCallback, useRef, useState} from 'react';
 import globalStyle from '../../configs/globalStyle';
 import styles from './style';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -7,16 +14,26 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import colors from '../../configs/colors';
+import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 
 const SongPlayer = ({navigation}) => {
   const [isSongLiked, setisSongLiked] = useState(false);
-  const [isSongPlay, setisSongPlay] = useState(true)
+  const [isSongPlay, setisSongPlay] = useState(true);
+  // ref
+  const bottomSheetRef = useRef(null);
+
+  // callbacks
+  const handleSheetChanges = useCallback(index => {
+    console.log('handleSheetChanges', index);
+  }, []);
 
   return (
     <View style={[globalStyle.container, styles.container]}>
-      <StatusBar barStyle={"light-content"} backgroundColor={"#25274D"} />
+      <StatusBar barStyle={'light-content'} backgroundColor={'#25274D'} />
       <View style={styles.topContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={{marginTop: 50}}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{marginTop: 50}}>
           <FontAwesome name="chevron-left" color={colors.TEXT} size={25} />
         </TouchableOpacity>
         <Image
@@ -51,12 +68,22 @@ const SongPlayer = ({navigation}) => {
           <Ionicons name="play-skip-back" color={colors.TEXT} size={30} />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => setisSongPlay(!isSongPlay)} style={styles.songToggle}>
-          <FontAwesome name={isSongPlay ? "pause" : "play"} color={colors.TEXT} size={25} />
+        <TouchableOpacity
+          onPress={() => setisSongPlay(!isSongPlay)}
+          style={styles.songToggle}>
+          <FontAwesome
+            name={isSongPlay ? 'pause' : 'play'}
+            color={colors.TEXT}
+            size={25}
+          />
         </TouchableOpacity>
 
         <TouchableOpacity>
-          <Ionicons name="play-skip-forward-sharp" color={colors.TEXT} size={30} />
+          <Ionicons
+            name="play-skip-forward-sharp"
+            color={colors.TEXT}
+            size={30}
+          />
         </TouchableOpacity>
 
         <TouchableOpacity>
@@ -64,7 +91,36 @@ const SongPlayer = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.playlistItemContainer}>
+      <BottomSheet
+        snapPoints={[150, '50%']}
+        ref={bottomSheetRef}
+        onChange={handleSheetChanges}
+        handleIndicatorStyle={{backgroundColor: "#fff"}}
+        style={{zIndex: 9999999999}}
+        backgroundStyle={{backgroundColor: 'rgb(50, 49, 99)'}}>
+        <BottomSheetView style={styles.bottomContentContainer}>
+          <View style={styles.playlistItemContainer}>
+            <Image
+              style={styles.playlistItemImg}
+              source={require('../../assets/images/RP1.jpg')}
+            />
+            <View style={{flexGrow: 1, flexShrink: 1, gap: 3}}>
+              <Text style={styles.playlistItemHead} numberOfLines={1}>
+                Grainy Day
+              </Text>
+              <Text style={styles.playlistItemSubHead}>Moody</Text>
+            </View>
+            <TouchableOpacity>
+              <Feather name="bar-chart-2" color={colors.TEXT} size={25} />
+            </TouchableOpacity>
+          </View>
+        </BottomSheetView>
+      </BottomSheet>
+      
+
+      
+
+      {/* <View style={styles.playlistItemContainer}>
         <Image
           style={styles.playlistItemImg}
           source={require('../../assets/images/RP1.jpg')}
@@ -76,7 +132,7 @@ const SongPlayer = ({navigation}) => {
         <TouchableOpacity>
           <Feather name="bar-chart-2" color={colors.TEXT} size={25} />
         </TouchableOpacity>        
-      </View>
+      </View> */}
     </View>
   );
 };
