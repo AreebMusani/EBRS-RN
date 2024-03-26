@@ -15,7 +15,9 @@ const FaceScan = ({visible, onClose}) => {
   return (
     <Modal visible={visible} animationType="slide">
       <View style={[globalStyle.container, styles.container]}>
-        <View style={styles.cameraFrame}></View>
+        <View style={styles.cameraFrame}>
+          <View style={{backgroundColor: "pink", ...StyleSheet.absoluteFill, flex: 1}} />
+        </View>
 
         <Text style={styles.msgText}>Point your Face in the frame</Text>
         <Image

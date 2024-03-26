@@ -18,7 +18,7 @@ const StackOptions = {
 
 const AuthStack = () => {
   return (
-    <Navigator initialRouteName='BottomNav' screenOptions={StackOptions}>
+    <Navigator initialRouteName='GettingStarted' screenOptions={StackOptions}>
       <Screen name="GettingStarted" component={GettingStarted} />
       <Screen name="Login" component={Login} />
       <Screen name="Registration" component={Registration} />

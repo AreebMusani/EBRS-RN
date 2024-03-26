@@ -15,6 +15,7 @@ const MainStack = () => {
                 backgroundColor: "#100A1C",
                 borderWidth: 0,
             },
+            
         }}
         >
       <Tab.Screen 

@@ -1,7 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity,
   View,
   TextInput,
-  Image
+  Image,
+  StatusBar
 } from 'react-native';
 import React, {useState} from 'react';
 import globalStyle from '../../configs/globalStyle';
@@ -18,12 +19,13 @@ const Login = ({navigation}) => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
   const onLogin = () => {
-    navigation.replace("Home");
+    navigation.replace("BottomNav");
   }
 
   return (
     <>
       <View style={[globalStyle.container, styles.container]}>
+        <StatusBar backgroundColor={'#25274D'} />
         <Text style={styles.heading}>Login your account</Text>
 
         <View style={{marginVertical: 10}}>
@@ -76,7 +78,7 @@ const Login = ({navigation}) => {
         </View>
       </View>
 
-      <BackButton navigation={navigation} />
+      <BackButton navigation={navigation}  />
 
     </>
   );

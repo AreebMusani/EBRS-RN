@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native'
 import colors from '../../configs/colors';
 import fontSizes from '../../configs/fontSizes';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 50,
+    paddingVertical: hp('5%'),
     paddingHorizontal: 20,
     gap: 5,
     elevation: 10,
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
   name: {
     color: colors.TEXT,
     fontWeight: "bold",
-    fontSize: fontSizes.heading3
+    fontSize: hp(fontSizes.heading3 / 10)
   },
 
   userIcon: {

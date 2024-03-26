@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, StatusBar } from 'react-native';
 
 import style from './style';
 import globalStyle from '../../configs/globalStyle';
@@ -9,6 +9,7 @@ import colors from '../../configs/colors';
 const GettingStarted = ({navigation}) => {
   return (
     <View style={[globalStyle.container, style.container]}>
+      <StatusBar backgroundColor={'#25274D'} />
       <Image 
         source={require("../../assets/images/Headphones.png")}
         style={style.headImg}
@@ -22,7 +23,7 @@ const GettingStarted = ({navigation}) => {
       <Button 
         text="Let's go"
         width={"50%"}
-        onPress={() => navigation.replace("Login")}
+        onPress={() => navigation.navigate("Login")}
       />
 
       <View style={style.footer}>

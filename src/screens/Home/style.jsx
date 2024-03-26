@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import colors from "../../configs/colors";
 import fontSizes from "../../configs/fontSizes";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
     container: {
@@ -18,12 +19,12 @@ const styles = StyleSheet.create({
     heading: {
         color: colors.TEXT,
         fontWeight: "bold",
-        fontSize: fontSizes.subHeading
+        fontSize: hp(fontSizes.subHeading / 10)
     },
 
     seeAllText: {
         color: colors.TEXT,
-        fontSize: fontSizes.text3,
+        fontSize: hp(fontSizes.text3 / 10),
     }
 })
 

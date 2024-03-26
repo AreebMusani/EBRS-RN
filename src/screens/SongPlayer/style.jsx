@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
 import colors from "../../configs/colors";
 import fontSizes from "../../configs/fontSizes";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const {width, height} = Dimensions.get("window");
 
@@ -17,31 +18,31 @@ const styles = StyleSheet.create({
     },
 
     wallpaper: {
-        height: height * 0.4,
-        borderBottomLeftRadius: height * 0.1,
-        borderBottomRightRadius: height * 0.1,
-        width: width * 0.4,
+        height: hp('40%'),//height * 0.4,
+        borderBottomLeftRadius: hp('10%'),
+        borderBottomRightRadius: hp('10%'),
+        width: wp('40%'),
         resizeMode: "cover"
     },
 
     timer: {
         color: "#777",
-        fontSize: fontSizes.subHeading,
+        fontSize: hp('2.5%')//fontSizes.subHeading,
     },
 
     itemName: {
         color: colors.TEXT,
-        fontSize: fontSizes.heading3,
+        fontSize: hp('3%'),//fontSizes.heading3,
         fontWeight: "bold"
     },
 
 
     controllerContainer: {
-        padding: 20,
+        paddingHorizontal: 20,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginTop: height * 0.1
+        marginTop: hp('6%')//height * 0.1
     },
 
     songToggle: {
@@ -58,11 +59,15 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: "#000",
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 10,
+        paddingVertical: hp('1%'),
+        paddingHorizontal: wp('2%'),
+        borderRadius: wp('3%'),
+        marginHorizontal: wp('3%'),
+        // paddingVertical: 10,
+        // paddingHorizontal: 20,
+        // borderRadius: 10,
         gap: 10,
-        marginHorizontal: 20
+        // marginHorizontal: 20
     },
 
     playlistItemHead: {
@@ -84,7 +89,8 @@ const styles = StyleSheet.create({
 
     bottomContentContainer: {
         // backgroundColor: "#0000002E"
-        flex: 1
+        flex: 1,
+        gap: hp('2%')
     }
 })
 

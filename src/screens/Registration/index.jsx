@@ -5,6 +5,7 @@ import {
   View,
   TextInput,
   Image,
+  StatusBar,
 } from 'react-native';
 import React, {useState} from 'react';
 import globalStyle from '../../configs/globalStyle';
@@ -22,6 +23,8 @@ const Registration = ({navigation}) => {
   return (
     <>
       <View style={[globalStyle.container, styles.container]}>
+        <StatusBar backgroundColor={'#25274D'} />
+
         <Text style={styles.heading}>Create an account</Text>
 
         <View style={{marginVertical: 10}}>
@@ -40,7 +43,7 @@ const Registration = ({navigation}) => {
 
           
         </View>
-        <Button onPress={() => navigation.replace('Home')} text={'Create an account'} />
+        <Button onPress={() => navigation.replace('BottomNav')} text={'Create an account'} />
 
         <View style={[styles.row, {marginTop: 20}]}>
           <View style={styles.line}></View>

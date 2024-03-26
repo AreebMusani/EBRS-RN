@@ -20,6 +20,7 @@ import {
 } from '../../utils/data';
 import colors from '../../configs/colors';
 import FaceScan from '../../components/FaceScan';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const Home = ({navigation}) => {
   const [isShowModal, setisShowModal] = useState(true);
@@ -46,9 +47,9 @@ const Home = ({navigation}) => {
             style={{marginVertical: 30}}
             horizontal
             showsHorizontalScrollIndicator={false}
-            ItemSeparatorComponent={() => <View style={{width: 20}}></View>}
+            ItemSeparatorComponent={() => <View style={{width: wp('6%')}}></View>}
             data={recentlyPlayed}
-            renderItem={({item, index}) => <SongItem navigation={navigation} key={index} item={item} />}
+            renderItem={({item, index}) => <SongItem navigation={navigation} key={index} item={item} style={{width: wp('42%'), height: hp('25%')}} />}
           />
         </View>
 
@@ -66,7 +67,7 @@ const Home = ({navigation}) => {
             ItemSeparatorComponent={() => <View style={{width: 20}}></View>}
             data={recommendData}
             renderItem={({item, index}) => (
-               <SongItem navigation={navigation} key={index} item={item} style={{height: 220}} />
+               <SongItem navigation={navigation} key={index} item={item} style={{width: wp('42%'), height: hp('25%')}} />
             )}
           />
         </View>
@@ -85,7 +86,7 @@ const Home = ({navigation}) => {
             ItemSeparatorComponent={() => <View style={{width: 20}}></View>}
             data={todayHitsData}
             renderItem={({item, index}) => (
-               <SongItem navigation={navigation} key={index} item={item} style={{height: 220}} />
+               <SongItem navigation={navigation} key={index} item={item} style={{width: wp('42%'), height: hp('25%')}} />
             )}
           />
         </View>
@@ -108,7 +109,7 @@ const Home = ({navigation}) => {
                 navigation={navigation}
                 key={index}
                 item={item}
-                style={{height: 200, borderRadius: 100}}
+                style={{width: wp('42%'), height: wp('42%'), borderRadius: 100}}
                 titleStyle={{textAlign: 'center', marginHorizontal: 20}}
               />
             )}
