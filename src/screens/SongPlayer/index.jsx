@@ -1,5 +1,6 @@
 import {
   Image,
+  ImageBackground,
   StatusBar,
   StyleSheet,
   Text,
@@ -31,7 +32,7 @@ const SongPlayer = ({navigation}) => {
   }, []);
 
   return (
-    <View style={[globalStyle.container, styles.container]}>
+    <ImageBackground source={require('../../assets/images/bg1.png')} style={[globalStyle.container, styles.container]}>
       <StatusBar barStyle={'light-content'} backgroundColor={'#25274D'} />
       <View style={styles.topContainer}>
         <TouchableOpacity
@@ -184,7 +185,7 @@ const SongPlayer = ({navigation}) => {
           <Feather name="bar-chart-2" color={colors.TEXT} size={25} />
         </TouchableOpacity>        
       </View> */}
-    </View>
+    </ImageBackground>
   );
 };
 

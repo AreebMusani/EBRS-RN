@@ -1,14 +1,17 @@
 import {useState} from 'react';
-import {TouchableOpacity, Text, View} from 'react-native';
+import {TouchableOpacity, Text, View, ActivityIndicator} from 'react-native';
 
 import styles from './style';
 
-const Button = ({text, width, onPress}) => {
+const Button = ({text, width, onPress, style, isLoading = false}) => {
   return (
     <TouchableOpacity 
-    onPress={onPress}
-    style={[styles.container, {width: width || "100%"}]}>
-      <Text style={styles.text}>{text}</Text>
+    onPress={isLoading ? () => {} : onPress}
+    style={[styles.container, style, {width: width || "100%"}]}>
+      {isLoading ? 
+        <ActivityIndicator color={'#fff'} size={"small"} /> : 
+        <Text style={styles.text}>{text}</Text>
+      }
     </TouchableOpacity>
   );
 };

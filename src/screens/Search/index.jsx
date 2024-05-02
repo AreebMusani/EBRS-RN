@@ -1,4 +1,4 @@
-import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import styles from './style'
 import globalStyle from '../../configs/globalStyle';
@@ -88,6 +88,7 @@ const Search = ({navigation}) => {
     )
 
   return (
+    <ImageBackground style={{...StyleSheet.absoluteFillObject}} source={require("../../assets/images/bg1.png")}>
     <ScrollView showsVerticalScrollIndicator={false} style={[globalStyle.container, styles.container]}>
         <BackButton onPress={() => navigation.navigate("Home")} style={{position: "relative", top: 0, left: 0, size: 20, marginVertical: 10}} />
         <View style={styles.row}>
@@ -95,7 +96,8 @@ const Search = ({navigation}) => {
             keyboardType={'email-address'}
             placeholder={'Artists, songs, or podcasts'}
             iconName={'search'}
-            containerStyle={{width: "auto", marginVertical: 0, backgroundColor: "rgba(50, 34, 81, 0.5)", borderWidth: 0, paddingVertical: 6, borderRadius: 20}}
+            newContainerStyle={{width: "auto", flexGrow: 1}}
+            containerStyle={{marginVertical: 0, backgroundColor: "rgba(50, 34, 81, 0.5)", borderWidth: 0, paddingVertical: 6, borderRadius: 20}}
           />
 
           <TouchableOpacity onPress={() => setisShowModal(true)}>
@@ -163,6 +165,7 @@ const Search = ({navigation}) => {
 
       <FaceScan visible={isShowModal} onClose={() => setisShowModal(false)} />
     </ScrollView>
+    </ImageBackground>
   )
 }
 

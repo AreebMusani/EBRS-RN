@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StatusBar } from 'react-native';
+import { View, Text, Image, StatusBar, ImageBackground } from 'react-native';
 
 import style from './style';
 import globalStyle from '../../configs/globalStyle';
@@ -8,8 +8,8 @@ import colors from '../../configs/colors';
 
 const GettingStarted = ({navigation}) => {
   return (
-    <View style={[globalStyle.container, style.container]}>
-      <StatusBar backgroundColor={'#25274D'} />
+    <ImageBackground source={require("../../assets/images/bg.png")} style={[globalStyle.container, style.container]}>
+      <StatusBar  backgroundColor={'#25274D'} />
       <Image 
         source={require("../../assets/images/Headphones.png")}
         style={style.headImg}
@@ -30,7 +30,7 @@ const GettingStarted = ({navigation}) => {
         <Text style={style.footerText}>Staca</Text>
         <Text style={{color: colors.TEXT}}>Rest music app</Text>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 

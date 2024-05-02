@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   FlatList,
+  ImageBackground,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import styles from './style';
@@ -21,19 +22,18 @@ import {
 import colors from '../../configs/colors';
 import FaceScan from '../../components/FaceScan';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { useSelector } from 'react-redux';
 
 const Home = ({navigation}) => {
-  const [isShowModal, setisShowModal] = useState(true);
+  const [isShowModal, setisShowModal] = useState(false);
+  const state = useSelector(state => state);
+  const {name} = state?.user?.user || {};
 
-  // useEffect(() => {
-  //   setisShowModal(true);
-  // }, [])
-  
   return (
-    <View style={[globalStyles.container, styles.container]}>
+    <ImageBackground source={require('../../assets/images/bg1.png')} style={[globalStyles.container, styles.container]}>
       <StatusBar backgroundColor={'#322251'} />
       <ScrollView style={{flexGrow: 1}} showsVerticalScrollIndicator={false}>
-        <Header name={'Areeb'} />
+        <Header name={name} />
 
         <View style={{paddingHorizontal: 20}}>
         <View style={{marginTop: 20}}>
@@ -119,7 +119,7 @@ const Home = ({navigation}) => {
       </ScrollView>
       <FaceScan visible={isShowModal} onClose={() => setisShowModal(false)} />
 
-    </View>
+    </ImageBackground>
   );
 };
 

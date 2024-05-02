@@ -3,7 +3,7 @@ import colors from '../../configs/colors';
 import fontSizes from '../../configs/fontSizes';
 
 const styles = StyleSheet.create({
-    inputContainer: {
+    inputContainer: (error) => ({
         // flex: 1,
         flexShrink: 1,      //NEW
         display: "flex",
@@ -14,12 +14,12 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
         backgroundColor: "rgba(50, 34, 81, 1)", //#322251
         borderStyle: "solid",
-        borderColor: colors.TEXT,
+        borderColor: error ? "red" : colors.TEXT,
         borderWidth: 1,
         width: "100%",
         overflow: "hidden",
-        marginVertical: 10
-      },
+        // marginVertical: 10
+    }),
     
     inputField: {
         borderWidth: 0,
@@ -28,7 +28,12 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         color: colors.TEXT,
         fontSize: fontSizes.text2
-      }
+    },
+
+    error: {
+        color: "red",
+        fontSize: fontSizes.text3
+    }
 })
 
 export default styles;

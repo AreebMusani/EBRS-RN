@@ -10,9 +10,6 @@ const rootReducer = combineReducers({
   user: userReducer,
 });
 
-// Define the root state type
-type RootState = ReturnType<typeof rootReducer>;
-
 // Persist Config
 const persistConfig = {
   key: "root",

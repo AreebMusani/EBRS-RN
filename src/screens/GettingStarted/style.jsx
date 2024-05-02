@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import colors from '../../configs/colors';
 import fontSizes from '../../configs/fontSizes';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const style = StyleSheet.create({
   container: {
@@ -12,7 +13,7 @@ const style = StyleSheet.create({
     width: 250,
     height: 250,
     resizeMode: 'contain',
-    marginTop: 80
+    marginTop: hp(5)
   },
 
 

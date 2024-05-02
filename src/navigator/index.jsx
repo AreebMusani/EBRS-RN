@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -9,6 +9,10 @@ import Home from '../screens/Home';
 import Search from '../screens/Search';
 import SongPlayer from '../screens/SongPlayer';
 import MainStack from './MainStack';
+import ForgotPassword from '../screens/ForgotPassword';
+import OTPVerification from '../screens/OTPVerification';
+import { useSelector } from 'react-redux';
+import Splash from '../screens/Splash';
 
 const Stack = createNativeStackNavigator();
 const {Navigator, Screen} = Stack;
@@ -18,10 +22,13 @@ const StackOptions = {
 
 const AuthStack = () => {
   return (
-    <Navigator initialRouteName='GettingStarted' screenOptions={StackOptions}>
+    <Navigator screenOptions={StackOptions}>
       <Screen name="GettingStarted" component={GettingStarted} />
       <Screen name="Login" component={Login} />
       <Screen name="Registration" component={Registration} />
+      <Screen name="ForgotPassword" component={ForgotPassword} />
+      <Screen name="OTPVerification" component={OTPVerification} />
+      
       {/* <Screen name="Home" component={Home} />
       <Screen name="Search" component={Search} /> */}
       <Screen name="SongPlayer" component={SongPlayer} />
@@ -30,10 +37,51 @@ const AuthStack = () => {
   );
 };
 
+const HomeStack = () => {
+
+  return (
+    <Navigator screenOptions={StackOptions}>
+      <Screen name='BottomNav' component={MainStack} />
+      <Screen name="SongPlayer" component={SongPlayer} />
+    </Navigator>
+  );
+};
+
+
 const Navigation = () => {
+  const state = useSelector(state => state);
+  const [Isloading, setIsloading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    checkAuthStatus()
+  }, [state?.user?.token])
+
+  const checkAuthStatus = () => {
+    try{
+      if(state.user.user){
+        setIsAuthenticated(true)
+      }else{
+        setIsAuthenticated(false)
+      }
+    }catch(error){
+      console.warn("Error while checking Auth Status: ", error);
+    }finally{
+      setTimeout(() => {
+        setIsloading(false);
+      }, 3000);
+    }
+  }
+
+  if(Isloading){
+    return <Splash />
+  }
+
   return (
     <NavigationContainer>
-      <AuthStack />
+      {isAuthenticated ? <HomeStack /> : <AuthStack />}
+      {/* <AuthStack />
+      <HomeStack /> */}
     </NavigationContainer>
   );
 };

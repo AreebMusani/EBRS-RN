@@ -5,18 +5,48 @@ import {
   Modal,
   TouchableOpacity,
   Image,
+  Linking,
+  ImageBackground,
 } from 'react-native';
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import styles from './style';
 import globalStyle from '../../configs/globalStyle';
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {
+  Camera,
+  CameraPermissionStatus,
+  useCameraDevice,
+} from 'react-native-vision-camera';
 
 const FaceScan = ({visible, onClose}) => {
+  const [cameraPermissionStatus, setCameraPermissionStatus] =
+    useState('not-determined');
+  const device = useCameraDevice('front');
+
+  const requestCameraPermission = useCallback(async () => {
+    console.log('Requesting camera permission...');
+    const permission = await Camera.requestCameraPermission();
+    console.log(`Camera permission status: ${permission}`);
+
+    // if (permission === 'denied') await Linking.openSettings();
+    setCameraPermissionStatus(permission);
+  }, []);
+
+
+  useEffect(() => {
+    requestCameraPermission();
+  }, [cameraPermissionStatus]);
+
   return (
     <Modal visible={visible} animationType="slide">
-      <View style={[globalStyle.container, styles.container]}>
+      <ImageBackground source={require('../../assets/images/bg.png')} style={[globalStyle.container, styles.container]}>
         <View style={styles.cameraFrame}>
-          <View style={{backgroundColor: "pink", ...StyleSheet.absoluteFill, flex: 1}} />
+          {cameraPermissionStatus === 'granted' && <Camera
+            style={styles.FaceScan}
+            device={device}
+            isActive={true}
+            resizeMode='cover'
+          />}
         </View>
 
         <Text style={styles.msgText}>Point your Face in the frame</Text>
@@ -27,11 +57,11 @@ const FaceScan = ({visible, onClose}) => {
         <TouchableOpacity>
           <Text style={styles.btnText}>Select from Photos</Text>
         </TouchableOpacity>
-      </View>
+      </ImageBackground>
 
       <TouchableOpacity onPress={onClose} style={styles.arrowBack}>
         <FontAwesome name="close" color="#fff" size={20} />
-        </TouchableOpacity>
+      </TouchableOpacity>
     </Modal>
   );
 };

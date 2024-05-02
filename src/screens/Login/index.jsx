@@ -2,9 +2,11 @@ import { StyleSheet, Text, TouchableOpacity,
   View,
   TextInput,
   Image,
-  StatusBar
+  StatusBar,
+  ImageBackground,
+  Keyboard
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import globalStyle from '../../configs/globalStyle';
 import styles from './styles';
 import Button from '../../components/Button';
@@ -14,17 +16,54 @@ import CheckBox from '@react-native-community/checkbox';
 import colors from '../../configs/colors';
 import BackButton from '../../components/BackButton';
 import FaceScan from '../../components/FaceScan';
+import { useForm } from 'react-hook-form';
+import { loginValidation } from '../../configs/validation.constants';
+import { yupResolver } from '@hookform/resolvers/yup';
+import api from '../../api/api';
+import withAlert from '../../components/AlertBox/withAlert';
+import Toast from 'react-native-toast-message';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/slices/user';
 
-const Login = ({navigation}) => {
+const Login = ({navigation, showAlert}) => {
+  const dispatch = useDispatch();
+  const [isLoading, setisLoading] = useState(false)
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const { 
+    register, 
+    handleSubmit,
+    getValues, 
+    setValue,
+    formState: { errors } 
+  } = useForm({
+    resolver: yupResolver(loginValidation)
+  });
 
-  const onLogin = () => {
-    navigation.replace("BottomNav");
+  const onLogin = async (data) => {
+    Keyboard.dismiss();
+    setisLoading(true)
+    try{
+      const payload = {
+        email: data.useremail,
+        password: data.password
+      }
+      const response = await api.login(payload);
+      console.log("response ", response);
+      dispatch(setUser({token: response?.token, user: response?.user}));
+      Toast.show({
+        type: 'success',
+        text1: "Login Successfully...",
+      });
+    }catch(error){
+      showAlert("Error", error?.message || error.toString());
+    }finally{
+      setisLoading(false)
+    }
   }
 
   return (
     <>
-      <View style={[globalStyle.container, styles.container]}>
+      <ImageBackground source={require("../../assets/images/bg.png")} style={[globalStyle.container, styles.container]}>
         <StatusBar backgroundColor={'#25274D'} />
         <Text style={styles.heading}>Login your account</Text>
 
@@ -33,9 +72,21 @@ const Login = ({navigation}) => {
             keyboardType={'email-address'}
             placeholder={'Email'}
             iconName={'envelope-o'}
+            name="useremail"
+            register={register}
+            onChange={(text) => {setValue("useremail", text)}}
+            error={errors.useremail}
           />
 
-          <InputField iconName={'lock'} placeholder={'Password'} isPassword />
+          <InputField 
+            iconName={'lock'} 
+            placeholder={'Password'} 
+            isPassword 
+            name="password"
+            register={register}
+            onChange={(text) => {setValue("password", text)}}
+            error={errors.password}
+          />
 
           <View style={styles.row}>
             <CheckBox
@@ -46,9 +97,9 @@ const Login = ({navigation}) => {
             <Text style={{color: '#fff'}}>Remember Me</Text>
           </View>
         </View>
-        <Button text={'Login'} onPress={onLogin} />
+        <Button text={'Login'} isLoading={isLoading} onPress={handleSubmit(onLogin)} />
 
-        <TouchableOpacity style={{marginTop: 10, marginBottom: 20}}>
+        <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')} style={{marginTop: 10, marginBottom: 20}}>
           <Text style={styles.forgetPass}>Forget the Password?</Text>
         </TouchableOpacity>
 
@@ -59,7 +110,9 @@ const Login = ({navigation}) => {
         </View>
 
         <View style={[styles.row, styles.iconContainer]}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            
+          }}>
             <Image source={require('../../assets/images/google.png')} />
           </TouchableOpacity>
           <TouchableOpacity>
@@ -76,7 +129,7 @@ const Login = ({navigation}) => {
             <Text style={styles.btnText}>Sign Up</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ImageBackground>
 
       <BackButton navigation={navigation}  />
 
@@ -84,4 +137,4 @@ const Login = ({navigation}) => {
   );
 };
 
-export default Login;
+export default withAlert(Login);

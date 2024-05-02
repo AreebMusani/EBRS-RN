@@ -28,6 +28,11 @@ const styles = StyleSheet.create({
         overflow: "hidden"
     },
 
+    FaceScan: {
+        width: "100%",
+        height: height * 0.5,
+    },
+
     msgText: {
         color: colors.TEXT,
         fontWeight: "bold",
