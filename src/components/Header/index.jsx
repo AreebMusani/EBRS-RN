@@ -4,8 +4,11 @@ import styles from './style';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from '../../configs/colors';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { useNavigation } from '@react-navigation/native';
 
 const Header = ({name}) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
         <View style={{flex: 1}}>
@@ -18,7 +21,7 @@ const Header = ({name}) => {
             <TouchableOpacity>
                 <Ionicons name="settings-sharp" color={colors.TEXT} size={wp('6%')} />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("UserProfile")}>
                 <Image source={require("../../assets/images/profile.jpg")} style={styles.userIcon} />
             </TouchableOpacity>
         </View>

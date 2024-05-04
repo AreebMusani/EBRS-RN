@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 
     seeAllText: {
         color: colors.TEXT,
-        fontSize: hp(fontSizes.text3 / 10),
+        fontSize: hp(fontSizes.text1 / 10),
     }
 })
 

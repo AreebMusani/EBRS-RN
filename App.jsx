@@ -1,5 +1,5 @@
-import React from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { SafeAreaView, Text, View , LogBox} from 'react-native';
 import { Provider } from 'react-redux';
 
 import Navigation from './src/navigator/index';
@@ -38,6 +38,8 @@ const toastConfig = {
 };
 
 const App = () => {
+  LogBox.ignoreAllLogs();
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
     <SafeAreaView style={containerStyle}>
