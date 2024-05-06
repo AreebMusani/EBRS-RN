@@ -13,6 +13,22 @@ const api = {
     const url = `${constants.BASE_URL}/user/register`;
     return axios.post(url, body);
   },
+
+  sendOTPCode: async (body) => {
+    const url = `${constants.BASE_URL}/user/forgot-password`;
+    return axios.post(url, body);
+  },
+
+  
+  verifyOTPCode: async (body) => {
+    const url = `${constants.BASE_URL}/user/verify-otp`;
+    return axios.post(url, body);
+  },
+
+  resetPassword: async (body) => {
+    const url = `${constants.BASE_URL}/user/reset-password`;
+    return axios.post(url, body);
+  },
 };
 
 export default api;

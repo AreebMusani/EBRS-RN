@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: 40, // Adjust as needed
-    backgroundColor: '#FFFFFF',
     borderRadius: 10,
     // padding: 10,
     zIndex: 1000,

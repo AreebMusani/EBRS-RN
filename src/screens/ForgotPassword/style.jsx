@@ -21,8 +21,6 @@ const styles = StyleSheet.create({
   },
 
   textField: {
-    borderWidth: 0.2,
-    borderColor: "#fff",
     borderRadius: 8,
     height: 49,
     marginTop: 30
@@ -36,7 +34,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "flex-end",
-    marginTop: 24
+    marginTop: 24,
+    paddingVertical: 0
   },
 
   buttonText: {
