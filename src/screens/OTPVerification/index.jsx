@@ -32,6 +32,7 @@ const OTPVerification = ({navigation, showAlert, route}) => {
         showAlert("Error", "please write otp code...")
         return;
       }
+      setisLoading(true);
       try{
         const payload = {
           email: route?.params?.email,

@@ -75,7 +75,7 @@ const UserProfile = ({navigation}) => {
 
           <View style={styles.rightSideHeader}>
             <Text numberOfLines={1} style={styles.profileName}>
-              {userDetails?.name}
+              {userDetails?.username}
             </Text>
             <View
               style={{
