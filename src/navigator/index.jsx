@@ -13,6 +13,7 @@ import ForgotPassword from '../screens/ForgotPassword';
 import OTPVerification from '../screens/OTPVerification';
 import { useSelector } from 'react-redux';
 import Splash from '../screens/Splash';
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 const Stack = createNativeStackNavigator();
 const {Navigator, Screen} = Stack;
@@ -52,6 +53,12 @@ const Navigation = () => {
   const state = useSelector(state => state);
   const [Isloading, setIsloading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+  GoogleSignin.configure({
+    webClientId: "729587116660-dkqqgtdq6corikljp43lmlrvvbip36tm.apps.googleusercontent.com"
+  });
+  }, [])
 
   useEffect(() => {
     checkAuthStatus()
