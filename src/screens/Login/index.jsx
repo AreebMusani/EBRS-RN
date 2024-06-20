@@ -61,6 +61,25 @@ const Login = ({navigation, showAlert}) => {
     }
   }
 
+  const saveAuthData = async (data) => {
+    Keyboard.dismiss();
+    setisLoading(true)
+    try{
+      const payload = {
+        email: data?.email,
+        username: data?.name,
+        googleId: data?.id,
+        avatar: data?.photo,
+        loginType: "google"
+      }
+      const response = await api.socialLogin(payload);
+    }catch(error){
+      showAlert("Error", error?.message || error.toString());
+    }finally{
+      setisLoading(false)
+    }
+  } 
+
   return (
     <>
       <ImageBackground source={require("../../assets/images/bg.png")} style={[globalStyle.container, styles.container]}>

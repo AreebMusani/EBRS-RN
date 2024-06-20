@@ -52,6 +52,12 @@ const Registration = ({navigation, showAlert}) => {
         email: data.useremail,
         password: data.password
       }
+
+      const response = await api.sendOTPForEmailVerification({email: data?.useremail});
+      console.log("response ", response);
+      navigation.navigate("OTPVerification", {...payload, purpose: "verifyEmail"});
+
+      /**
       const response = await api.signup(payload);
       console.log("response ", response);
       dispatch(setUser({token: response?.token, user: response?.user}));
@@ -60,6 +66,7 @@ const Registration = ({navigation, showAlert}) => {
         text1: "Registered Successfully...",
       });
       navigation.navigate("BottomNav");
+      */
     }catch(error){
       showAlert("Error", error?.message || error.toString());
     } finally{
