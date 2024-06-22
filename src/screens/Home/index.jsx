@@ -25,15 +25,24 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { useSelector } from 'react-redux';
 
 const Home = ({navigation}) => {
+  const [isFirstTimeOpen, setisFirstTimeOpen] = useState(false);
   const [isShowModal, setisShowModal] = useState(false);
   const state = useSelector(state => state);
-  const {name} = state?.user?.user || {};
+  const {username} = state?.user?.user || {};
+
+  useEffect(() => {
+    if(!isFirstTimeOpen){
+      setisFirstTimeOpen(true);
+      setisShowModal(true);
+    }
+  }, [])
+
 
   return (
     <ImageBackground source={require('../../assets/images/bg1.png')} style={[globalStyles.container, styles.container]}>
       <StatusBar backgroundColor={'#322251'} />
       <ScrollView style={{flexGrow: 1}} showsVerticalScrollIndicator={false}>
-        <Header name={name} />
+        <Header name={username} />
 
         <View style={{paddingHorizontal: 20}}>
         <View style={{marginTop: 20}}>

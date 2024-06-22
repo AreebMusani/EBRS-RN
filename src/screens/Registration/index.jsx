@@ -8,6 +8,7 @@ import {
   StatusBar,
   ImageBackground,
   Keyboard,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
 import globalStyle from '../../configs/globalStyle';
@@ -27,9 +28,11 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/slices/user';
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
+import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
 
 const Registration = ({navigation, showAlert}) => {
   const [isLoading, setisLoading] = useState(false)
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const dispatch = useDispatch();
 
@@ -52,6 +55,12 @@ const Registration = ({navigation, showAlert}) => {
         email: data.useremail,
         password: data.password
       }
+
+      const response = await api.sendOTPForEmailVerification({email: data?.useremail});
+      console.log("response ", response);
+      navigation.navigate("OTPVerification", {...payload, purpose: "verifyEmail"});
+
+      /**
       const response = await api.signup(payload);
       console.log("response ", response);
       dispatch(setUser({token: response?.token, user: response?.user}));
@@ -60,12 +69,58 @@ const Registration = ({navigation, showAlert}) => {
         text1: "Registered Successfully...",
       });
       navigation.navigate("BottomNav");
+      */
     }catch(error){
       showAlert("Error", error?.message || error.toString());
     } finally{
       setisLoading(false);
     }
   }
+
+  const signInWithGoogle = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log(userInfo);
+      setIsGoogleLoading(true);
+      await saveAuthData(userInfo?.user);
+    } catch (error) {
+      if (isErrorWithCode(error)) {
+        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        } else if (error.code === statusCodes.IN_PROGRESS) {
+          console.log('IN_PROGRESS');
+        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+          console.log('PLAY_SERVICES_NOT_AVAILABLE');
+        } else {
+          showAlert("Error", error?.message || error.toString());
+        }
+      } else {
+        // an error that's not related to google sign in occurred
+        showAlert("Error", error?.message || error.toString());
+      }
+    }finally{
+      setIsGoogleLoading(false);
+    }
+  };
+
+  const saveAuthData = async data => {
+    Keyboard.dismiss();
+    const payload = {
+      email: data?.email,
+      username: data?.name,
+      googleId: data?.id,
+      avatar: data?.photo,
+      loginType: 'google',
+    };
+    console.log('payload', payload);
+    const response = await api.socialLogin(payload);
+    console.log('response ', response);
+    dispatch(setUser({token: response?.token, user: response?.user}));
+    Toast.show({
+      type: 'success',
+      text1: 'Login Successfully...',
+    });
+  };
 
   return (
     <>
@@ -123,7 +178,7 @@ const Registration = ({navigation, showAlert}) => {
           <View style={styles.line}></View>
         </View>
 
-        <View style={[styles.row, styles.iconContainer]}>
+        {/* <View style={[styles.row, styles.iconContainer]}>
           <TouchableOpacity>
             <Image source={require('../../assets/images/google.png')} />
           </TouchableOpacity>
@@ -133,7 +188,9 @@ const Registration = ({navigation, showAlert}) => {
           <TouchableOpacity>
             <Image source={require('../../assets/images/Apple.png')} />
           </TouchableOpacity>
-        </View>
+        </View> */}
+
+        <GoogleSigninButton onPress={signInWithGoogle} style={{ width: "60%", marginVertical: 20 }} />
 
         <View style={styles.row}>
           <Text style={styles.msgText}>Already have an account? </Text>
@@ -144,6 +201,18 @@ const Registration = ({navigation, showAlert}) => {
       </ImageBackground>
 
       <BackButton navigation={navigation} />
+
+      {isGoogleLoading && (
+        <View
+          style={{
+            ...StyleSheet.absoluteFillObject,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.4)',
+          }}>
+          <ActivityIndicator color={'#fff'} size={'large'} />
+        </View>
+      )}
     </>
   );
 };

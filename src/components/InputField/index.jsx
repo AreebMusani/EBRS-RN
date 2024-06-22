@@ -10,6 +10,7 @@ import styles from './style';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const InputField = ({
+  isEditable = true,
   iconName, keyboardType, placeholder, isPassword, containerStyle, iconColor, inputStyles, newContainerStyle,
   name,
   error,
@@ -29,7 +30,9 @@ const InputField = ({
         style={[styles.inputField, inputStyles]}
         secureTextEntry={isInputTextShow}
         keyboardType={keyboardType || "default"}
+        // disabled={disabled}
         autoCapitalize='none'
+        editable={isEditable}
         {...register(name)}
         onChangeText={onChange}
         {...props}

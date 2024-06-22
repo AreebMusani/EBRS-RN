@@ -13,6 +13,7 @@ import ForgotPassword from '../screens/ForgotPassword';
 import OTPVerification from '../screens/OTPVerification';
 import { useSelector } from 'react-redux';
 import Splash from '../screens/Splash';
+import UserProfile from '../screens/UserProfile';
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 const Stack = createNativeStackNavigator();
@@ -33,17 +34,17 @@ const AuthStack = () => {
       {/* <Screen name="Home" component={Home} />
       <Screen name="Search" component={Search} /> */}
       <Screen name="SongPlayer" component={SongPlayer} />
-      <Screen name='BottomNav' component={MainStack} />
+      {/* <Screen name='BottomNav' component={MainStack} /> */}
     </Navigator>
   );
 };
 
 const HomeStack = () => {
-
   return (
     <Navigator screenOptions={StackOptions}>
       <Screen name='BottomNav' component={MainStack} />
       <Screen name="SongPlayer" component={SongPlayer} />
+      <Screen name='UserProfile' component={UserProfile} />
     </Navigator>
   );
 };
@@ -65,6 +66,7 @@ const Navigation = () => {
   }, [state?.user?.token])
 
   const checkAuthStatus = () => {
+    console.log("checkAuthStatus", state.user.user);
     try{
       if(state.user.user){
         setIsAuthenticated(true)

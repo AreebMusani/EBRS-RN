@@ -4,8 +4,16 @@ import styles from './style';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from '../../configs/colors';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { useNavigation } from '@react-navigation/native';
+import { Images } from '../../utils/images';
+import { useSelector } from 'react-redux';
+import { getUserData } from '../../redux/slices/user';
 
+const { User } = Images;
 const Header = ({name}) => {
+  const navigation = useNavigation();
+  const userDetails = useSelector(getUserData);
+
   return (
     <View style={styles.container}>
         <View style={{flex: 1}}>
@@ -18,8 +26,8 @@ const Header = ({name}) => {
             <TouchableOpacity>
                 <Ionicons name="settings-sharp" color={colors.TEXT} size={wp('6%')} />
             </TouchableOpacity>
-            <TouchableOpacity>
-                <Image source={require("../../assets/images/profile.jpg")} style={styles.userIcon} />
+            <TouchableOpacity onPress={() => navigation.navigate("UserProfile")}>
+                <Image source={userDetails?.avatar ? {uri: userDetails?.avatar} : User} style={styles.userIcon} />
             </TouchableOpacity>
         </View>
     </View>

@@ -13,9 +13,9 @@ const MainStack = () => {
             headerShown: false, 
             tabBarStyle: {
                 backgroundColor: "#100A1C",
-                borderWidth: 0,
+                borderTopWidth: 0,
+                height: 50
             },
-            
         }}
         >
       <Tab.Screen 
