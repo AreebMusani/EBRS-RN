@@ -31,6 +31,7 @@ import {setUser} from '../../redux/slices/user';
 import {
   GoogleSignin,
   GoogleSigninButton,
+  isErrorWithCode,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
@@ -60,6 +61,7 @@ const Login = ({navigation, showAlert}) => {
     } catch (error) {
       if (isErrorWithCode(error)) {
         if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+          console.log('SIGN_IN_CANCELLED');
         } else if (error.code === statusCodes.IN_PROGRESS) {
           console.log('IN_PROGRESS');
         } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {

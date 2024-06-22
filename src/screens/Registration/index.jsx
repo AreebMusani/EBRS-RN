@@ -28,7 +28,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/slices/user';
 import Toast from 'react-native-toast-message';
 import api from '../../api/api';
-import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
+import { GoogleSignin, GoogleSigninButton, isErrorWithCode } from '@react-native-google-signin/google-signin';
 
 const Registration = ({navigation, showAlert}) => {
   const [isLoading, setisLoading] = useState(false)
