@@ -39,6 +39,15 @@ const api = {
     const url = `${constants.BASE_URL}/user/reset-password`;
     return axios.post(url, body);
   },
+
+  detectEmotion: async (body) => {
+    const url = `https://oarfish-obliging-rooster.ngrok-free.app/analyze_emotion`;
+    return axios.post(url, body, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  }
 };
 
 export default api;

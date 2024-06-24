@@ -1,14 +1,17 @@
 import axios from "axios";
 
 const axiosObject = {
-  post: async function (url, body) {
+  post: async function (url, body, headers) {
     try {
-      const response = await axios.post(url, body, {
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-      });
+      console.log(headers);
+      const response = await axios.post(url, body,
+        headers ? headers : { 
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",  
+          },
+        }
+      );
       return response.data;
     } catch (e) {
       const message = e?.response?.data?.message || e?.message;

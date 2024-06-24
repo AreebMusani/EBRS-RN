@@ -46,6 +46,13 @@ const styles = StyleSheet.create({
     btnText: {
         color: colors.TEXT,
         fontSize: fontSizes.text3
+    },
+
+    noCameraAccess: {
+        width: "100%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center"
     }
 })
 
