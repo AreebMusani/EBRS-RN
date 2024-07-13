@@ -47,6 +47,11 @@ const api = {
         'Content-Type': 'multipart/form-data'
       }
     });
+  },
+
+  getSongs: async ({body, userId, category}) => {
+    const url = `${constants.BASE_URL}/songs/${category}?userId=${userId}`;
+    return axios.get(url, body);
   }
 };
 

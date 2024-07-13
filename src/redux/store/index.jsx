@@ -4,10 +4,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Reducers
 import userReducer from "../slices/user";
+import songReducer from "../slices/songs";
 
 // Root Reducer
 const rootReducer = combineReducers({
   user: userReducer,
+  song: songReducer
 });
 
 // Persist Config

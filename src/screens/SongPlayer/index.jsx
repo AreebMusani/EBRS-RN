@@ -17,10 +17,12 @@ import Feather from 'react-native-vector-icons/Feather';
 import colors from '../../configs/colors';
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import AudioPlayer from '../../components/AudioPlayer';
 
-const SongPlayer = ({navigation}) => {
+const SongPlayer = ({navigation, route}) => {
   const [isSongLiked, setisSongLiked] = useState(false);
   const [isSongPlay, setisSongPlay] = useState(true);
+  console.log(route?.params);
   // ref
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => [hp('23%'), hp('50%')], []);
@@ -42,13 +44,15 @@ const SongPlayer = ({navigation}) => {
         </TouchableOpacity>
         <Image
           style={styles.wallpaper}
-          source={require('../../assets/images/RP2.jpg')}
+          // source={require('../../assets/images/RP2.jpg')}
+          source={{uri: route?.params?.data?.Image}}
         />
         <TouchableOpacity style={{marginTop: hp('5%')}}>
           <Entypo name="dots-three-vertical" color={colors.TEXT} size={25} />
         </TouchableOpacity>
       </View>
 
+      {/* <AudioPlayer /> */}
       <View style={{alignItems: 'center', marginTop: hp('3%'), gap: 20}}>
         <Text style={styles.timer}>3.54</Text>
         <View style={{flexDirection: 'row', gap: 20, alignItems: 'center'}}>
@@ -94,6 +98,7 @@ const SongPlayer = ({navigation}) => {
           <FontAwesome name="download" color={colors.TEXT} size={hp('3%')} />
         </TouchableOpacity>
       </View>
+
 
       <BottomSheet
         snapPoints={snapPoints}

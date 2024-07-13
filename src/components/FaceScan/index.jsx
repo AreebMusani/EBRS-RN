@@ -27,7 +27,7 @@ import fontSizes from '../../configs/fontSizes';
 import colors from '../../configs/colors';
 import Button from '../Button';
 
-const FaceScan = ({visible, onClose, showAlert}) => {
+const FaceScan = ({visible, onClose, showAlert, navigation}) => {
   const [cameraPermissionStatus, setCameraPermissionStatus] =
     useState('not-determined');
 
@@ -40,7 +40,7 @@ const FaceScan = ({visible, onClose, showAlert}) => {
         source={require('../../assets/images/bg.png')}
         style={[globalStyle.container, styles.container]}>
         {detectedData ? (
-          <Screen2 detectedData={detectedData} againScanNow={() => setdetectedData(null)} />
+          <Screen2 onClose={onClose} detectedData={detectedData} navigation={navigation} againScanNow={() => setdetectedData(null)} />
         ) : (
           <Screen1
             saveDetectedResult={setdetectedData}
@@ -48,6 +48,7 @@ const FaceScan = ({visible, onClose, showAlert}) => {
             cameraPermissionStatus={cameraPermissionStatus}
             setCameraPermissionStatus={setCameraPermissionStatus}
             showAlert={showAlert}
+            navigation={navigation}
           />
         )}
       </ImageBackground>
@@ -165,7 +166,7 @@ const Screen1 = ({
   );
 };
 
-const Screen2 = ({detectedData, againScanNow}) => {
+const Screen2 = ({detectedData, againScanNow, navigation, onClose}) => {
   const {Angry, Sad, Disgust, Neutral, Surprise, Happy} = Images;
 
   const dic = {
@@ -177,6 +178,15 @@ const Screen2 = ({detectedData, againScanNow}) => {
     happy: Happy,
   };
 
+  const emotion = ["happy", "sad", "fear", "angry"].includes((detectedData?.emotions?.[0].dominant_emotion).toLowerCase()) ? detectedData?.emotions?.[0].dominant_emotion : 'neutral';
+
+  const handleGetSongs = () => {
+    onClose();
+    navigation.navigate("Home", {
+    emotion: emotion
+  })
+}
+
   return (
     <View
       style={[globalStyle.container, {marginTop: 40, alignItems: 'center'}]}>
@@ -185,7 +195,7 @@ const Screen2 = ({detectedData, againScanNow}) => {
       </Text>
       <View style={{marginVertical: 20}}>
         <Image
-          source={dic[`${detectedData?.emotions?.[0].dominant_emotion}`]}
+          source={dic[`${emotion}`]}
           style={{
             width: 160,
             height: 160,
@@ -195,21 +205,28 @@ const Screen2 = ({detectedData, againScanNow}) => {
         />
         <Text
           style={{color: 'white', fontSize: fontSizes.text2, marginTop: 10, textAlign: "center"}}>
-          {detectedData?.emotions?.[0].dominant_emotion}
+          {emotion}
         </Text>
       </View>
 
           <View style={{alignItems: "center", marginTop: 20}}>
             <Text style={{color: 'white', fontSize: fontSizes.text2}}>If you think this is incorrect:</Text>
-            {/* <TouchableOpacity onPress={againScanNow} style={{backgroundColor: colors.PRIMARY, paddingHorizontal: 20, paddingVertical: 10, borderRadius: 40, marginTop: 10}}>
-              <Text style={{color: 'white', fontSize: fontSizes.text2}}>Again Detect Now</Text>
-            </TouchableOpacity> */}
             <Button 
               text={"Again Detect Now"}
               onPress={againScanNow}
               style={{paddingHorizontal: 20, paddingVertical: 10, width: "auto", marginTop: 10}}
             />
           </View>
+
+
+          <View style={{alignItems: "center", marginTop: 20}}>
+            <Button 
+              text={"Get recommended Songs"}
+              onPress={handleGetSongs}
+              style={{paddingHorizontal: 20, paddingVertical: 10, width: "auto", marginTop: 10}}
+            />
+          </View>
+
     </View>
   );
 };

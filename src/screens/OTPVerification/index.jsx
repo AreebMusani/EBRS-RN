@@ -88,12 +88,12 @@ const OTPVerification = ({navigation, showAlert, route}) => {
     }
     const response = await api.signup(payload);
       console.log("response ", response);
-      dispatch(setUser({token: response?.token, user: response?.user}));
+      // dispatch(setUser({token: response?.token, user: response?.user}));
       Toast.show({
         type: 'success',
         text1: "Registered Successfully...",
       });
-      navigation.navigate("BottomNav");
+      navigation.navigate("Login");
   }
 
   return (

@@ -20,12 +20,12 @@ const Header = ({name}) => {
           <Text numberOfLines={1} style={styles.name}>Hello, {name}</Text>
         </View>
         <View style={styles.rightSide}>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
                 <Ionicons name="notifications" color={colors.TEXT} size={wp('6%')} />
             </TouchableOpacity>
             <TouchableOpacity>
                 <Ionicons name="settings-sharp" color={colors.TEXT} size={wp('6%')} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity onPress={() => navigation.navigate("UserProfile")}>
                 <Image source={userDetails?.avatar ? {uri: userDetails?.avatar} : User} style={styles.userIcon} />
             </TouchableOpacity>
