@@ -26,6 +26,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import api from '../../api/api';
 import { getUserData } from '../../redux/slices/user';
 import { getSongsData, setSongs } from '../../redux/slices/songs';
+import TrackPlayer from 'react-native-track-player';
+import {myTractList } from "../../constants/dummyTrack";
 
 const Home = ({navigation, route}) => {
   const userDetails = useSelector(getUserData);
@@ -46,19 +48,52 @@ const Home = ({navigation, route}) => {
   }, [])
 
   useEffect(() => {
+    // TrackPlayer.add([
+    //   {
+    //     title: "Ae Dil Hai Mushkil",
+    //     artist: "Pritam, Arijit Singh",
+    //     album: "Ae Dil Hai Mushkil",
+    //     url: "https://audio.jukehost.co.uk/YRyN5qXSbLojPJNg4NvH74lz9YXOdPxg",
+    //     artwork: "https://drive.google.com/file/d/1gEr6J1xldCdevaSGkA3tiV7Duc1HOgHK/view?usp=drive_link",
+    //     emotion: "sad"
+    //   },
+    // ]).then((data) => {
+    //   console.log("data", data);
+    //   TrackPlayer.play();
+    // }).catch((error) => {
+    //   console.log("error", error);
+    // })
+    // TrackPlayer.getQueue().then((track) => {
+    //   console.log(track, "track");
+    // }).catch((error) => console.log("log", error));
+    loadTrack(myTractList);
+    // getTrackList();
+  }, [])
+
+  const loadTrack = async (list) => {
+    await TrackPlayer.add(list);
+  }
+
+  useEffect(() => {
     getSongsByCategory();
   }, [isShowModal])
+
+  const getTrackList = async () => {
+    const tracks = await TrackPlayer.getQueue();
+    console.log(`First title: ${tracks[0].title}`);
+    TrackPlayer.play();
+  }
 
   const getSongsByCategory = useCallback(async () => {
     try{
       setloading(true);
-      console.log(userDetails?._id);
-      console.log(emotion);
+      // console.log(userDetails?._id);
+      // console.log(emotion);
       const response = await api.getSongs({
         userId: userDetails?._id,
         category: emotion
       })
-      console.log(response);
+      // console.log(response);
       dispatch(setSongs({setSongs: response}))
     }catch(error){
       console.log(error.toString());
@@ -102,11 +137,15 @@ const Home = ({navigation, route}) => {
           <FlatList
             style={{marginVertical: 30}}
             showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
+            horizontal={false}
+            scrollEnabled={false}
+            ItemSeparatorComponent={() => <View style={{height: 20, width: 20}}></View>}
             // data={recommendData}
-            data={songsData}
+            // data={songsData}
+            data={myTractList}
+            numColumns={2}
             renderItem={({item, index}) => (
-               <SongItem navigation={navigation} key={index} item={item} style={{width: "100%", height: hp('30%')}} />
+               <SongItem navigation={navigation} key={index} item={{...item, key: index}} style={{flex: 1, height: hp('30%'), marginLeft: index % 2 === 1 ? 20 : 0 }} />
             )}
           />
         </View>

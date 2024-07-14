@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: hp('10%'),
         borderBottomRightRadius: hp('10%'),
         width: wp('40%'),
-        resizeMode: "cover"
+        resizeMode: "contain"
     },
 
     timer: {
@@ -33,7 +33,10 @@ const styles = StyleSheet.create({
     itemName: {
         color: colors.TEXT,
         fontSize: hp('3%'),//fontSizes.heading3,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        flexShrink: 1,
+        textAlign: "center",
+        marginLeft: 30
     },
 
 
