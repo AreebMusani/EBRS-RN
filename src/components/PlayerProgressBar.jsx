@@ -4,7 +4,7 @@ import { useSharedValue } from 'react-native-reanimated'
 import TrackPlayer, { useProgress } from 'react-native-track-player'
 
 export const PlayerProgressBar = ({ style }) => {
-	const { duration, position } = useProgress(250)
+	const { duration, position } = useProgress(250);
 
 	const isSliding = useSharedValue(false)
 	const progress = useSharedValue(0)

@@ -36,9 +36,9 @@ const SongPlayer = ({navigation, route}) => {
   const snapPoints = useMemo(() => [hp('23%'), hp('50%')], []);
 
   useEffect(() => {
-    if(isPlay.playing){
+    // if(isPlay.playing){
       setisSongPlay(isPlay.playing);
-    }
+    // }
   }, [isPlay.playing])
 
   useEffect(() => {
