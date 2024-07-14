@@ -18,10 +18,11 @@ import colors from '../../configs/colors';
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import AudioPlayer from '../../components/AudioPlayer';
-import TrackPlayer, {useIsPlaying, useProgress, useActiveTrack} from 'react-native-track-player';
+import TrackPlayer, {useIsPlaying, useProgress, useActiveTrack, Event} from 'react-native-track-player';
 import { useIsFocused } from '@react-navigation/native';
 
 const SongPlayer = ({navigation, route}) => {
+  console.log(route?.params?.data);
   const progress = useProgress();
   const activeItem = useActiveTrack();
 
@@ -41,9 +42,23 @@ const SongPlayer = ({navigation, route}) => {
     // }
   }, [isPlay.playing])
 
+  // useEffect(() => {
+  //   console.warn(key);
+  //   (async () => {
+  //     const data = await TrackPlayer.getQueue();
+  //     console.log("QUEUE", data);
+  //   })()
+  // })
+
   useEffect(() => {
-    console.log(activeItem);
-    if(selectedSong !== activeItem?.title){
+    TrackPlayer.addEventListener(Event.PlaybackActiveTrackChanged, (data) => {
+      console.log("Event.PlaybackActiveTrackChanged ", data);
+    })
+  })
+
+  useEffect(() => {
+    console.log(activeItem, " activeItem");
+    if(selectedSong?.title !== activeItem?.title){
       setselectedSong(activeItem);
     }else{
       setselectedSong(route?.params?.data);
@@ -51,8 +66,7 @@ const SongPlayer = ({navigation, route}) => {
   }, [activeItem]);
 
   useEffect(() => {
-    if(key){
-      console.log(key);
+    if(key !== activeItem?.key){
       handleTrackSelection(key);
     }
   }, [])
@@ -62,7 +76,7 @@ const SongPlayer = ({navigation, route}) => {
     console.log('handleSheetChanges', index);
   }, []);
 
-  const handleTrackSelection = async (trackId) => {
+  const handleTrackSelection = async (trackId) => {    
     await TrackPlayer.pause();
     await TrackPlayer.skip(trackId);
     await TrackPlayer.seekTo(0);

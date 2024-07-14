@@ -27,7 +27,7 @@ import api from '../../api/api';
 import { getUserData } from '../../redux/slices/user';
 import { getSongsData, setSongs } from '../../redux/slices/songs';
 import TrackPlayer from 'react-native-track-player';
-import {myTractList } from "../../constants/dummyTrack";
+import {awaisData, myTractList } from "../../constants/dummyTrack";
 
 const Home = ({navigation, route}) => {
   const userDetails = useSelector(getUserData);
@@ -66,7 +66,7 @@ const Home = ({navigation, route}) => {
     // TrackPlayer.getQueue().then((track) => {
     //   console.log(track, "track");
     // }).catch((error) => console.log("log", error));
-    loadTrack(myTractList);
+    // loadTrack(myTractList);
     // getTrackList();
   }, [])
 
@@ -94,7 +94,22 @@ const Home = ({navigation, route}) => {
         category: emotion
       })
       // console.log(response);
-      dispatch(setSongs({setSongs: response}))
+      const mapping = response.map((item, index) => ({
+        _id: item?._id,
+        title: item?.Name,
+        artist: item?.Artist,
+        artwork: item?.Image,
+        url: item?.URL,
+        Emotion: item?.Emotion,
+        Rating: item?.Rating,
+        Ratings: item?.Ratings || [],
+        key: index,
+      }))
+      console.log(mapping);
+      dispatch(setSongs({setSongs: mapping}))
+      // loadTrack(mapping)
+      await TrackPlayer.reset();
+      await TrackPlayer.add(mapping);
     }catch(error){
       console.log(error.toString());
     }finally{
@@ -141,8 +156,8 @@ const Home = ({navigation, route}) => {
             scrollEnabled={false}
             ItemSeparatorComponent={() => <View style={{height: 20, width: 20}}></View>}
             // data={recommendData}
-            // data={songsData}
-            data={myTractList}
+            data={songsData}
+            // data={myTractList}
             numColumns={2}
             renderItem={({item, index}) => (
                <SongItem navigation={navigation} key={index} item={{...item, key: index}} style={{flex: 1, height: hp('30%'), marginLeft: index % 2 === 1 ? 20 : 0 }} />
