@@ -94,6 +94,11 @@ const styles = StyleSheet.create({
         // backgroundColor: "#0000002E"
         flex: 1,
         gap: hp('2%')
+    },
+
+    songDetails: {
+        fontSize: fontSizes.text3,
+        fontWeight: "bold"
     }
 })
 

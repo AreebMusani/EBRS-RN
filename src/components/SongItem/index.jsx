@@ -9,9 +9,14 @@ const SongItem = ({item, style, titleStyle, navigation, key}) => {
   return (
     <TouchableOpacity
       onPress={() =>{
-        navigation.navigate('SongPlayer', {
-          data: item,
+        TrackPlayer.skip(item?.key).then(( ) => {
+          navigation.navigate('SongPlayer', {
+            data: item,
+          })
         })
+        // navigation.navigate('SongPlayer', {
+        //   data: item,
+        // })
         // console.log(item?.key);
         // handleTrackSelection(item?.key)
       }}
@@ -30,16 +35,17 @@ const SongItem = ({item, style, titleStyle, navigation, key}) => {
             style={[styles.head1, titleStyle, {flexShrink: 1}]}>
             {item?.title}
           </Text>
-          <Text style={[styles.head2, {fontSize: 12}]}>{item.Emotion}</Text>
+          <Text style={[styles.head1]}>{item.Rating}</Text>
         </View>
 
         <Text
-          style={{
-            color: 'black',
+          style={[styles.head1, {
+            // color: 'black',
             fontWeight: 'bold',
-            fontSize: fontSizes.text3,
-          }}>
-          {item?.Rating}
+            fontSize: 12,
+            elevation: 4
+          }]}>
+          {item?.Emotion}
         </Text>
       </View>
     </TouchableOpacity>

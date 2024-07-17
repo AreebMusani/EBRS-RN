@@ -9,14 +9,14 @@ import {
   ImageBackground,
   ActivityIndicator,
 } from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styles from './style';
 import globalStyle from '../../configs/globalStyle';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {
   Camera,
   CameraPermissionStatus,
-  useCameraDevice,
+  useCameraDevice
 } from 'react-native-vision-camera';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import api from '../../api/api';
@@ -78,6 +78,7 @@ const Screen1 = ({
   cameraPermissionStatus,
   setCameraPermissionStatus,
 }) => {
+  const camera = useRef(null)
   const device = useCameraDevice('front');
 
   const requestCameraPermission = useCallback(async () => {
@@ -134,11 +135,53 @@ const Screen1 = ({
     }
   };
 
+  const takePhoto = async () => {
+    try {
+      setIsLoading(true);
+      const photo = await camera.current.takePhoto({
+        qualityPrioritization: 'quality',
+        flash: 'auto',
+        enableAutoRedEyeReduction: true,
+        enableAutoStabilization: true,
+      });
+      const formData = new FormData();
+      let imageInFormData = {
+        uri: `file://${photo?.path}`,
+        type: 'image/jpeg',
+        name: 'photo.jpg'
+      };
+      console.log(photo);
+      // console.log(imageInFormData);
+      formData.append('image', imageInFormData);
+      console.log('FORMDATA', formData);
+      const detectRes = await api.detectEmotion(formData);
+      // console.log('Photo:', photo);
+      console.log(detectRes);
+      saveDetectedResult(detectRes);
+    } catch (error) {
+      console.error('Error taking photo or sending to API:', error);
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+      } else if (error.request) {
+        console.error('No response received:', error.request);
+      } else {
+        console.error('Error details:', error.message);
+      }
+      console.error('Error config:', error.config);    
+      showAlert('Error', error?.message || error.toString());
+    }finally{
+      setIsLoading(false);
+    }
+  }
+
   return (
     <>
       <View style={styles.cameraFrame}>
         {cameraPermissionStatus === 'granted' && (
           <Camera
+            ref={camera}
+            photo={true}
             style={styles.FaceScan}
             device={device}
             isActive={true}
@@ -155,6 +198,9 @@ const Screen1 = ({
       </View>
 
       <Text style={styles.msgText}>Point your Face in the frame</Text>
+      <TouchableOpacity onPress={takePhoto} style={{marginTop: 10, width: 60, height: 60, borderRadius: 30, backgroundColor: "#fff", justifyContent: "center", alignItems: "center"}}>
+        <FontAwesome name="camera" color="#000" size={25} onPress={takePhoto} />
+      </TouchableOpacity>
       <Image
         style={styles.wave}
         source={require('../../assets/images/waves.png')}
@@ -167,7 +213,7 @@ const Screen1 = ({
 };
 
 const Screen2 = ({detectedData, againScanNow, navigation, onClose}) => {
-  const {Angry, Sad, Disgust, Neutral, Surprise, Happy} = Images;
+  const {Angry, Sad, Disgust, Neutral, Surprise, Happy, Fear} = Images;
 
   const dic = {
     angry: Angry,
@@ -176,6 +222,7 @@ const Screen2 = ({detectedData, againScanNow, navigation, onClose}) => {
     neutral: Neutral,
     surprise: Surprise,
     happy: Happy,
+    fear: Fear
   };
 
   const emotion = ["happy", "sad", "fear", "angry"].includes((detectedData?.emotions?.[0].dominant_emotion).toLowerCase()) ? detectedData?.emotions?.[0].dominant_emotion : 'neutral';
@@ -183,9 +230,10 @@ const Screen2 = ({detectedData, againScanNow, navigation, onClose}) => {
   const handleGetSongs = () => {
     onClose();
     navigation.navigate("Home", {
-    emotion: emotion
-  })
-}
+      emotion: emotion
+    });
+    againScanNow();
+  }
 
   return (
     <View

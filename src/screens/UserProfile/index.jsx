@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './style';
 import globalStyles from '../../configs/globalStyle';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -24,16 +24,20 @@ import colors from '../../configs/colors';
 import { Images } from '../../utils/images';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import withAlert from '../../components/AlertBox/withAlert';
+import api from '../../api/api';
+import { getSongsData } from '../../redux/slices/songs';
 
 const { UserIcon } = Images;
 
 const UserProfile = ({navigation, showAlert}) => {
   const dispatch = useDispatch();
   const [isLoading, setisLoading] = useState(false);
+  const songsData = useSelector(getSongsData);
 
   const [isSongPlay, setisSongPlay] = useState(false);
   const [showMenu, setshowMenu] = useState(false);
   const userDetails = useSelector(getUserData);
+  const [likesData, setlikesData] = useState([]);
 
   const onLogout = async () => {
     try{
@@ -49,6 +53,24 @@ const UserProfile = ({navigation, showAlert}) => {
       setisLoading(false);
     }
   } 
+
+  const getLikesData = async () => {
+    try{
+      setisLoading(true)
+      const response = await api.getFavouriteSongs({userId: userDetails?._id});
+      console.log("reso", response);
+      setlikesData(response?.data)
+    }catch(error){
+      console.log(error);
+      showAlert('Error', error?.message || error.toString());
+    }finally{
+      setisLoading(false)
+    }
+  } 
+
+  useEffect(() => {
+    getLikesData();
+  }, [])
 
   return (
     <ImageBackground
@@ -107,13 +129,13 @@ const UserProfile = ({navigation, showAlert}) => {
                 gap: 20,
               }}>
               <View>
-                <Text style={[styles.lightText]}>40</Text>
-                <Text style={styles.lightText}>Followers</Text>
+                <Text style={[styles.lightText]}>{likesData?.length}</Text>
+                <Text style={styles.lightText}>Favourite</Text>
               </View>
 
               <View>
-                <Text style={[styles.lightText]}>40</Text>
-                <Text style={styles.lightText}>Followers</Text>
+                <Text style={[styles.lightText]}>{songsData?.length}</Text>
+                <Text style={styles.lightText}>Total Songs</Text>
               </View>
             </View>
           </View>
@@ -123,19 +145,21 @@ const UserProfile = ({navigation, showAlert}) => {
       <ScrollView
         contentContainerStyle={{flexGrow: 1, padding: 20}}
         showsVerticalScrollIndicator={false}>
-        <View>
+        {/* <View>
           <Text style={styles.heading}>Likes</Text>
           <View style={{gap: 26}}>
             <PlayListItem songName={'Grainy Day'} songCategory={'Moody'} />
             <PlayListItem songName={'Grainy Day'} songCategory={'Moody'} />
           </View>
-        </View>
+        </View> */}
 
         <View style={{marginTop: 26}}>
           <Text style={styles.heading}>Favourite</Text>
           <View style={{gap: 26}}>
-            <PlayListItem songName={'Grainy Day'} songCategory={'Moody'} />
-            <PlayListItem songName={'Grainy Day'} songCategory={'Moody'} />
+            {likesData?.map((item, index) => (
+              <PlayListItem songName={item?.song?.Name} songCategory={item?.song?.Emotion} />
+            ))}
+            {/* <PlayListItem songName={'Grainy Day'} songCategory={'Moody'} /> */}
           </View>
         </View>
       </ScrollView>

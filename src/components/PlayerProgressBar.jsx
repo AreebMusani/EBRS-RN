@@ -11,9 +11,6 @@ export const PlayerProgressBar = ({ style }) => {
 	const min = useSharedValue(0)
 	const max = useSharedValue(1)
 
-	const trackElapsedTime = formatSecondsToMinutes(position)
-	const trackRemainingTime = formatSecondsToMinutes(duration - position)
-
 	if (!isSliding.value) {
 		progress.value = duration > 0 ? position / duration : 0
 	}
@@ -28,17 +25,21 @@ export const PlayerProgressBar = ({ style }) => {
 		return `${formattedMinutes}:${formattedSeconds}`
 	}
 
+	
+	const trackElapsedTime = formatSecondsToMinutes(position)
+	const trackRemainingTime = formatSecondsToMinutes(duration - position)
+
 	return (
 		<View style={style}>
 			<Slider
 				progress={progress}
 				minimumValue={min}
 				maximumValue={max}
-				thumbWidth={0}
+				thumbWidth={10}
 				renderBubble={() => null}
 				theme={{
-					minimumTrackTintColor: "#000",
-					maximumTrackTintColor: "#000",
+					minimumTrackTintColor: "#fff",
+					maximumTrackTintColor: "#fff",
 				}}
 				onSlidingStart={() => (isSliding.value = true)}
 				onValueChange={async (value) => {
@@ -73,9 +74,9 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 	},
 	timeText: {
-		color: "#000",
+		color: "#fff",
 		opacity: 0.75,
-		fontSize: 10,
+		fontSize: 12,
 		letterSpacing: 0.7,
 		fontWeight: '500',
 	},

@@ -15,7 +15,7 @@ export const songSlice = createSlice({
     // Add reducers for more actions here
     setSongs: (state, action) => {
         state.listOfSongs = action.payload.setSongs;
-      },
+    },
 
   }
 })

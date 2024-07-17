@@ -7,6 +7,7 @@ import {
   View,
   FlatList,
   ImageBackground,
+  RefreshControl
 } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './style';
@@ -39,6 +40,8 @@ const Home = ({navigation, route}) => {
   const [isShowModal, setisShowModal] = useState(false);
   const state = useSelector(state => state);
   const {username} = state?.user?.user || {};
+  const [refreshing, setRefreshing] = useState(false);
+
 
   useEffect(() => {
     if(!isFirstTimeOpen){
@@ -76,7 +79,7 @@ const Home = ({navigation, route}) => {
 
   useEffect(() => {
     getSongsByCategory();
-  }, [isShowModal])
+  }, [route?.params?.emotion])
 
   const getTrackList = async () => {
     const tracks = await TrackPlayer.getQueue();
@@ -114,14 +117,31 @@ const Home = ({navigation, route}) => {
       console.log(error.toString());
     }finally{
       setloading(false);
+      setRefreshing(false);
     }
-  }, [emotion])
+  }, [route?.params?.emotion])
 
+  const onRefresh = () => {
+    setRefreshing(true); // Set refreshing to true before fetching new data
+    getSongsByCategory();
+  };
 
   return (
     <ImageBackground source={require('../../assets/images/bg1.png')} style={[globalStyles.container, styles.container]}>
       <StatusBar backgroundColor={'#322251'} />
-      <ScrollView style={{flexGrow: 1}} showsVerticalScrollIndicator={false}>
+      <ScrollView 
+
+refreshControl={
+  <RefreshControl
+    refreshing={refreshing}
+    onRefresh={onRefresh}
+    colors={['#9Bd35A', '#689F38']}
+    tintColor={'#689F38'}
+    title={'Loading...'}
+    titleColor={'#689F38'}
+  />
+}
+        style={{flexGrow: 1}} showsVerticalScrollIndicator={false}>
         <Header name={username} />
 
         <View style={{paddingHorizontal: 20}}>
@@ -160,7 +180,10 @@ const Home = ({navigation, route}) => {
             // data={myTractList}
             numColumns={2}
             renderItem={({item, index}) => (
+              <>
                <SongItem navigation={navigation} key={index} item={{...item, key: index}} style={{flex: 1, height: hp('30%'), marginLeft: index % 2 === 1 ? 20 : 0 }} />
+                {(!songsData?.[index + 1] && songsData.length % 2 === 1) && <View style={{marginLeft: 20, flex: 1}} />}
+              </>
             )}
           />
         </View>
