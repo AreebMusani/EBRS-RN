@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
 
   menuItemText: {
     color: "#000"
-
   },
 
   songToggle: {
@@ -90,11 +89,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     lineHeight: 30,
     overflow: 'hidden',
+    color: colors.TEXT,
   },
 
   lightText: {
     fontSize: 12,
     lineHeight: 14,
+    color: colors.TEXT,
   },
 
   heading: {
