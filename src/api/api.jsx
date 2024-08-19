@@ -41,7 +41,7 @@ const api = {
   },
 
   detectEmotion: async (body) => {
-    const url = `https://oarfish-obliging-rooster.ngrok-free.app/analyze_emotion`;
+    const url = `https://oarfish-obliging-rooster.ngrok-free.app/detect_emotion`;
     return axios.post(url, body, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -52,7 +52,27 @@ const api = {
   getSongs: async ({body, userId, category}) => {
     const url = `${constants.BASE_URL}/songs/${category}?userId=${userId}`;
     return axios.get(url, body);
-  }
+  },
+
+  giveRatingToSong: async ({songId, body}) => {
+    const url = `${constants.BASE_URL}/songs/${songId}/rate`;
+    return axios.post(url, body)
+  },
+
+  getFavouriteSongs: async ({userId}) => {
+    const url = `${constants.BASE_URL}/likes?userId=${userId}`;
+    return axios.get(url)
+  },
+
+  addFavouriteSong: async (body) => {
+    const url = `${constants.BASE_URL}/likes`;
+    return axios.post(url, body);
+  },
+
+  removeLikedSong: async (body) => {
+    const url = `${constants.BASE_URL}/likes/remove`;
+    return axios.post(url, body);
+  },
 };
 
 export default api;

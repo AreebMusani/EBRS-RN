@@ -25,7 +25,13 @@ const styles = StyleSheet.create({
     seeAllText: {
         color: colors.TEXT,
         fontSize: hp(fontSizes.text1 / 10),
-    }
+    },
+    row: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 10,
+        paddingHorizontal: 20
+    },
 })
 
 export default styles;

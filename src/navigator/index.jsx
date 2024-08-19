@@ -33,7 +33,7 @@ const AuthStack = () => {
       
       {/* <Screen name="Home" component={Home} />
       <Screen name="Search" component={Search} /> */}
-      <Screen name="SongPlayer" component={SongPlayer} />
+      {/* <Screen name="SongPlayer" component={SongPlayer} /> */}
       {/* <Screen name='BottomNav' component={MainStack} /> */}
     </Navigator>
   );
@@ -42,7 +42,8 @@ const AuthStack = () => {
 const HomeStack = () => {
   return (
     <Navigator screenOptions={StackOptions}>
-      <Screen name='BottomNav' component={MainStack} />
+      {/* <Screen name='BottomNav' component={MainStack} /> */}
+      <Screen name="Home" component={Home} />
       <Screen name="SongPlayer" component={SongPlayer} />
       <Screen name='UserProfile' component={UserProfile} />
     </Navigator>

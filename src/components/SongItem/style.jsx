@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 
     head1: {
         color: colors.TEXT,
-        fontSize: fontSizes.subHeading,
+        fontSize: fontSizes.text2,
         fontWeight: "bold",
         textShadowColor: 'rgba(0, 0, 0, 1)',
         textShadowOffset: {width: 1, height: 1},

@@ -163,7 +163,7 @@ const Search = ({navigation}) => {
           </View>
         </View>
 
-      <FaceScan visible={isShowModal} onClose={() => setisShowModal(false)} />
+      <FaceScan navigation={navigation} visible={isShowModal} onClose={() => setisShowModal(false)} />
     </ScrollView>
     </ImageBackground>
   )

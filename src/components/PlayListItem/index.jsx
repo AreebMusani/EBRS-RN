@@ -5,12 +5,13 @@ import SongImg from '../../assets/images/RP1.jpg';
 import colors from '../../configs/colors';
 import Feather from "react-native-vector-icons/Feather";
 
-const PlayListItem = ({songName, songCategory, containerStyles}) => {
+const PlayListItem = ({onPress, songName, songCategory, songArtist, containerStyles}) => {
+  
   return (
-    <TouchableOpacity activeOpacity={0.8} style={[styles.playlistItemContainer, containerStyles]}>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.8} style={[styles.playlistItemContainer, containerStyles]}>
       <Image
         style={styles.playlistItemImg}
-        source={SongImg}
+        source={{uri: songArtist}}
       />
       <View style={{flexGrow: 1, flexShrink: 1, gap: 3}}>
         <Text style={styles.playlistItemHead} numberOfLines={1}>
