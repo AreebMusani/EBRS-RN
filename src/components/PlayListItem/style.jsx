@@ -36,6 +36,10 @@ const styles = StyleSheet.create({
         height: wp("12"),
         borderRadius: 10
     },
+
+    songArtist: {
+        width: 80,
+    }
 })
 
 export default styles;

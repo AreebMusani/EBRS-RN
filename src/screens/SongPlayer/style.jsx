@@ -98,7 +98,9 @@ const styles = StyleSheet.create({
 
     songDetails: {
         fontSize: fontSizes.text3,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#fff",
+        flexShrink: 1
     }
 })
 

@@ -13,35 +13,9 @@ import TrackPlayer, {
   usePlayWhenReady,
 } from 'react-native-track-player';
 import {setupPlayer, useLogTrackPlayerState} from './src/components/trackPlayer/TrackPlayerService';
+import { toastConfig } from './src/configs/toastConfig';
 
 const containerStyle = { flexGrow: 1 };
-
-const toastConfig = {
-  success: props => (
-    <BaseToast
-      {...props}
-      style={{borderLeftColor: 'green'}}
-      contentContainerStyle={{backgroundColor: colors.PRIMARY}}
-      text1Style={{
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#fff',
-      }}
-    />
-  ),
-  error: props => (
-    <BaseToast
-      {...props}
-      style={{borderLeftColor: 'red'}}
-      contentContainerStyle={{backgroundColor: colors.PRIMARY}}
-      text1Style={{
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#fff',
-      }}
-    />
-  ),
-};
 
 const App = () => {
   LogBox.ignoreAllLogs();
